@@ -12,7 +12,7 @@ it contains:
 """
 import os
 
-from automodeling.utils.airflow import airflow_task
+from automodeling.airflow.utils import airflow_task
 
 
 def md_to_scenarios(md: str) -> list[str]:
