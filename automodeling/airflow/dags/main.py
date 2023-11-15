@@ -19,7 +19,7 @@ from airflow.operators.python import get_current_context
 from automodeling.airflow.tasks.pdf_to_md import pdf_to_md_task
 
 # from automodeling.tasks.all_to_graph import all_to_graph_task
-from automodeling.airflow.tasks.text_to_ontology import text_to_ontology_task
+#from automodeling.airflow.tasks.text_to_ontology import text_to_ontology_task
 
 logger = logging.getLogger(__name__)
 
