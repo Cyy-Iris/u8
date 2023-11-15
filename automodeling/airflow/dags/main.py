@@ -71,7 +71,7 @@ def main():
     airflow_io_md = pdf_to_text_task(airflow_io_pdf)
 
     # step 2: 2 tasks in parallel using previously generated MD
-    airflow_io_ontology = text_to_ontology_task(airflow_io_md)
+    #airflow_io_ontology = text_to_ontology_task(airflow_io_md)
     # airflow_io_scenarios = md_to_scenarios_task(airflow_io_md)
 
     # step 3: Final tasks using both outputs of previous tasks
