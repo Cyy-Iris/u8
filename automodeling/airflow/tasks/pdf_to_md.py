@@ -12,10 +12,10 @@ from airflow.utils.context import Context
 
 from automodeling.airflow.utils import airflow_task
 from automodeling.tasks.pdf_to_md.main import pdf_to_md
-
-
-@airflow_task(s3folder_inputs=["raw_pdf/"], s3folder_outputs=["pdf_to_md/"])
-def pdf_to_md_task(local_pdf_path: str, context: Context) -> list[tuple[str, str]]:
+@airflow_task(
+    s3folder_inputs=["raw_pdf/"], s3folder_outputs=["pdf_to_md/"]
+)
+def pdf_to_md_task(local_pdf_path: str) -> list[tuple[str, str]]:
     """Airflow Task converting a single PDF file into MD.
 
     Notes:
@@ -39,12 +39,8 @@ def pdf_to_md_task(local_pdf_path: str, context: Context) -> list[tuple[str, str
     pass
 
     # 2. run the pdf_to_md on prepared input
-    md_pages = pdf_to_md(local_pdf_path)
-
-    if "dag_run" not in context:
-        raise KeyError("`dag_run` was not found in context provided by airflow")
-    run_id = context["dag_run"].run_id
+    md_content = pdf_to_md(local_pdf_path)
 
     # 3. prepare output in standard format list of tuple (filename, content)
-    filename = f"{run_id}/" + os.path.basename(local_pdf_path).split(".")[0] + ".json"
-    return [(filename, json.dumps(md_pages))]
+    filename = os.path.basename(local_pdf_path).split(".")[0] + ".md"
+    return [(filename, md_content)]
