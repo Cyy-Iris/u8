@@ -1,3 +1,4 @@
+'''
 import pdftotext
 
 def pdf_to_text(fpath: str) -> list:
@@ -21,3 +22,22 @@ def pdf_to_text(fpath: str) -> list:
         full_pdf.append(page)
 
     return full_pdf
+'''
+
+from langchain.document_loaders import PyPDFLoader
+from task_logic.pdf_to_md.utils import (
+    remove_pages,
+    merge_pages,
+    POST_PROCESSING_STEPS,
+)
+
+
+def pdf_to_md(fpath: str) -> str:
+    loader = PyPDFLoader(fpath)
+    pages = loader.load_and_split()
+    pages = remove_pages(pages)
+    md = merge_pages(pages)
+    for post_processing_step in POST_PROCESSING_STEPS:
+        md = post_processing_step(md)
+
+    return md
