@@ -16,7 +16,7 @@ from airflow.models.param import Param
 from airflow.operators.python import get_current_context
 
 # from automodeling.tasks.md_to_scenarios import md_to_scenarios_task
-from automodeling.airflow.tasks.pdf_to_text import pdf_to_text_task
+from automodeling.airflow.tasks.pdf_to_md import pdf_to_md_task
 
 # from automodeling.tasks.all_to_graph import all_to_graph_task
 from automodeling.airflow.tasks.text_to_ontology import text_to_ontology_task
@@ -68,7 +68,7 @@ def main():
     airflow_io_pdf = starting_task()
 
     # step 1: 1st task converting PDF to MD
-    airflow_io_md = pdf_to_text_task(airflow_io_pdf)
+    airflow_io_md = pdf_to_md_task(airflow_io_pdf)
 
     # step 2: 2 tasks in parallel using previously generated MD
     #airflow_io_ontology = text_to_ontology_task(airflow_io_md)
